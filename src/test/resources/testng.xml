@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Ring Labs test suite. " preserve-order="true">
+
+    <test name="CuriosityTest">
+        <classes>
+            <class name="CuriosityCameraTest"></class>
+        </classes>
+    </test>
+
+</suite>
