@@ -1,10 +1,10 @@
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 
@@ -26,13 +26,14 @@ public class CuriosityCameraTest {
 
     @Test
     public void comparePhotos_Sol_EarthDate() {
-        for (int i = 0; i < PHOTOS_CNT; i++) {
-            given().when()
-                    .get("?earth_date=" + EARTH_DATE + "&api_key=" + API_KEY).then()
-                    .assertThat().body("photos[" + i + "]", equalTo(
-                            get("?sol=" + SOL + "&api_key=" + API_KEY).path("photos[" + i + "]"))
-                    );
+        Response responseEarthDate = get("?earth_date=" + EARTH_DATE + "&api_key=" + API_KEY);
+        Response responseSol = get("?sol=" + SOL + "&api_key=" + API_KEY);
 
+        for (int i = 0; i < PHOTOS_CNT; i++) {
+            responseEarthDate.then()
+                    .assertThat().body("photos[" + i + "]", equalTo(
+                    responseSol.path("photos[" + i + "]"))
+            );
         }
     }
 
